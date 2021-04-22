@@ -1,0 +1,20 @@
+server:
+  port: 8191
+  servlet:
+    context-path: /marketplace/core
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      dialect: org.hibernate.dialect.PostgreSQL95Dialect
+      ddl-auto: create-drop
+      show_sql: true
+      temp:
+        use_jdbc_metadata_defaults: false
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/core_db?currentSchema=core_sh
+    username: postgres
+    password: 1qaz@WSX
+  flyway:
+    enabled: true
