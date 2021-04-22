@@ -9,5 +9,4 @@ public class MpProductApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MpProductApplication.class, args);
 	}
-
 }

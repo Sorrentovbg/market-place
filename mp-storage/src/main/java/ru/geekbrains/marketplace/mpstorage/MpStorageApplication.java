@@ -10,4 +10,5 @@ public class MpStorageApplication {
 		SpringApplication.run(MpStorageApplication.class, args);
 	}
 
+
 }

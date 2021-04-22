@@ -21,5 +21,4 @@ public class Order {
         joinColumns = @JoinColumn(name = "order_status"))
     private Status status;
 
-
 }

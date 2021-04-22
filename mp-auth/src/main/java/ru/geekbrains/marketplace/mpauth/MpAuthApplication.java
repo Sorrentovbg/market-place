@@ -9,5 +9,4 @@ public class MpAuthApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MpAuthApplication.class, args);
 	}
-
 }

@@ -6,4 +6,5 @@ import ru.geekbrains.marketplace.mpauth.models.CashBack;
 
 @Repository
 public interface CashbackRepository extends JpaRepository<CashBack, Long> {
+
 }

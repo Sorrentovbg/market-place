@@ -7,4 +7,5 @@ import ru.geekbrains.marketplace.mporder.models.Status;
 
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Long> {
+
 }

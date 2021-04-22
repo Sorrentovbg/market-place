@@ -8,4 +8,5 @@ import ru.geekbrains.marketplace.mpproduct.models.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+
 }

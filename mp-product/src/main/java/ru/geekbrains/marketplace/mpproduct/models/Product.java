@@ -41,4 +41,5 @@ public abstract class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Collection <Category> productCategory;
+
 }

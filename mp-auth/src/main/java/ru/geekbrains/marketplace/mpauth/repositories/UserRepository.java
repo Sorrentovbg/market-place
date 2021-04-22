@@ -6,4 +6,5 @@ import ru.geekbrains.marketplace.mpauth.models.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
+
 }

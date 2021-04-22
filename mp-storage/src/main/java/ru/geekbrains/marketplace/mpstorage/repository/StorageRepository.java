@@ -7,4 +7,5 @@ import ru.geekbrains.marketplace.mpstorage.model.Storage;
 
 @Repository
 public interface StorageRepository extends JpaRepository<Storage, Long> {
+
 }
