@@ -1,4 +1,4 @@
-package ru.geekbrains.marketplace.models;
+package ru.geekbrains.marketplace.mpauth.models;
 
 import lombok.Data;
 
@@ -15,4 +15,5 @@ public class CashBack {
 
     @Column(name = "cashback")
     private Long cashBack;
+
 }

@@ -23,4 +23,5 @@ public class ProductItem extends Product {
 //        joinColumns = @JoinColumn(name = "product_item_id"),
 //        inverseJoinColumns = @JoinColumn(name = "storage_id"))
 //        private Collection<Storage> storages;
+
 }

@@ -9,5 +9,4 @@ public class MpCoreApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MpCoreApplication.class, args);
 	}
-
 }

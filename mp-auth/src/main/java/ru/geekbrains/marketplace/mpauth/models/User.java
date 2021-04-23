@@ -32,6 +32,4 @@ public class User {
 //            joinColumns = @JoinColumn(name = "orders_id"))
 //    private Collection<Order> order;
 
-
-
 }

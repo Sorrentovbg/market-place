@@ -7,4 +7,5 @@ import ru.geekbrains.marketplace.mpproduct.models.Comment;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment,Long> {
+
 }

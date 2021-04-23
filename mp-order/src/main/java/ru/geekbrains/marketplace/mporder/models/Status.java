@@ -17,4 +17,5 @@ public class Status {
     @Column(name = "orders_status")
     private String status;
 
+
 }

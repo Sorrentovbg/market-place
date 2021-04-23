@@ -19,3 +19,4 @@ public class Storage {
     @Column(name = "storage_address")
     private String address;
 }
+
