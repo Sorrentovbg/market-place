@@ -1,8 +1,9 @@
-server:
-  port: 8191
-  servlet:
-    context-path: /marketplace/core
 spring:
+  session:
+    store-type: redis
+    redis:
+      host: localhost
+      port: 6379
   jpa:
     show-sql: true
     hibernate:
@@ -13,9 +14,11 @@ spring:
         use_jdbc_metadata_defaults: false
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/core_db?currentSchema=core_sh
+    url: jdbc:postgresql://localhost:5432/user_db?currentSchema=user_sh
     username: postgres
     password: 1qaz@WSX
   flyway:
     enabled: true
-
+    location: classpath:/db/migration/market/mscore
+jwt:
+  secret: 1q2w3e4r
