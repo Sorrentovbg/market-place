@@ -24,7 +24,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    @Before("execution(public void ru.geekbrains.marketplace.msproduct.services.ProductService.getProductById())")
+    @Before("execution(public void ru.geekbrains.marketplace.msproduct.services.ProductService.getProductById(..))")
     public void beforeGetProductById(JoinPoint joinPoint){
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         System.out.println("В ProductService был вызван метод: " + methodSignature);
