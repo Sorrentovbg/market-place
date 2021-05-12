@@ -12,5 +12,4 @@ public class ProductDto {
     private String title;
 
     private int price;
-
 }

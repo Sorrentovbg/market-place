@@ -1,8 +1,9 @@
-#server:
-#  port: 8189
-#  servlet:
-#    context-path: /marketplace
+server:
+  servlet:
+    context-path: /marketplace/product
 spring:
+  application:
+    name: ms-product
   session:
     jdbc:
       initialize-schema: always
@@ -20,7 +21,12 @@ spring:
     password: 1qaz@WSX
   flyway:
     enabled: true
-
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+    registerWithEureka: true
+    fetch-registry: true
 
 
 

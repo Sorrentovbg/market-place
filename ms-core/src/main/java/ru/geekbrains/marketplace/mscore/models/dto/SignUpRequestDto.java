@@ -8,5 +8,4 @@ public class SignUpRequestDto {
     private String login;
 
     private String password;
-
 }

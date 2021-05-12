@@ -2,7 +2,6 @@ package ru.geekbrains.marketplace.mscore.filters;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -27,8 +27,6 @@ unique index user_table_login_uindex
 insert into role_table(name) values ('ROLE_ADMIN');
 insert into role_table(name) values ('ROLE_USER');
 
-
-
 --create table users (
 --    id          bigserial primary key,
 --    login       varchar(35) not null,
@@ -48,10 +46,10 @@ insert into role_table(name) values ('ROLE_USER');
 --    foreign key (role_id) references roles(id)
 --);
 --
---insert into users (login, password) values
---    ('admin', '1q2w3e4r'),
---    ('user', '1q2w3e4r');
---
+--insert into users (login, password, role_id) values
+--    ('admin', '1',1),
+--    ('user', '1',1);
+----
 --insert into roles (name) values ('ROLE_ADMIN');
 --insert into roles (name) values ('ROLE_USER');
 --

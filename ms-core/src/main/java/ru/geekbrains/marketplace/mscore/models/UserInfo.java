@@ -16,4 +16,5 @@ public class UserInfo {
     private String userEmail;
 
     private String role;
+
 }

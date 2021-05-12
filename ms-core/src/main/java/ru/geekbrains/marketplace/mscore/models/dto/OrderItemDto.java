@@ -12,5 +12,4 @@ public class OrderItemDto {
     private int pricePerProduct;
 
     private int price;
-
 }

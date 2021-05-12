@@ -9,7 +9,7 @@ import ru.geekbrains.marketplace.mscore.models.UserInfo;
 @Service
 public class RedisService  {
 
-    @Autowired
+
     TokenRedisRepository tokenRedisRepository;
 
     public void putInvalidToken(UserInfo user,String token){
@@ -19,4 +19,5 @@ public class RedisService  {
     public boolean checkToken(String token){
        return tokenRedisRepository.existsById(token);
     }
+
 }
