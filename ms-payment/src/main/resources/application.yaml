@@ -1,7 +1,5 @@
 server:
-  port: 8195
-  servlet:
-    context-path: /marketplace/payment
+  port: 19872
 spring:
   application:
     name: ms-payment

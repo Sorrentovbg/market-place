@@ -15,6 +15,7 @@
     <name>ms-core</name>
 
     <dependencies>
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>

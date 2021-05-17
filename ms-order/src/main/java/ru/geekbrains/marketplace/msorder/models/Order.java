@@ -10,7 +10,6 @@ import javax.persistence.*;
 public class Order {
 
     @Id
-    @Column(name = "order_id")
     private Long id;
 
     @Column(name = "product_id")

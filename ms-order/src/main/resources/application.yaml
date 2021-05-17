@@ -1,7 +1,5 @@
 server:
-  port: 8192
-  servlet:
-    context-path: /marketplace/order
+  port: 19871
 spring:
   application:
     name: ms-order

@@ -5,7 +5,6 @@ eureka:
   client:
     registerWithEureka: false
     fetchRegistry: false
-
 spring:
   cloud:
     config:
