@@ -13,22 +13,18 @@
     <artifactId>ms-payment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ms-payment</name>
-    <description>Demo project for Spring Boot</description>
 
     <properties>
         <java.version>11</java.version>
     </properties>
 
     <dependencies>
+
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>ru.geekbrains.market</groupId>
             <artifactId>ms-core</artifactId>
@@ -36,14 +32,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
