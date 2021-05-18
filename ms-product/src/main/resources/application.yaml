@@ -1,6 +1,5 @@
 server:
-  servlet:
-    context-path: /marketplace/product
+  port: 19873
 spring:
   application:
     name: ms-product

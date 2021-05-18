@@ -1,7 +1,5 @@
 server:
-  port: 8194
-  servlet:
-    context-path: /marketplace/storage
+  port: 19874
 spring:
   application:
     name: ms-storage
