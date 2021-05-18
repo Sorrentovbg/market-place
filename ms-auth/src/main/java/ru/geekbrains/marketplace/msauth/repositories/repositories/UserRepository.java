@@ -8,5 +8,4 @@ import ru.geekbrains.marketplace.msauth.repositories.entities.User;
 public interface UserRepository extends JpaRepository<User,Long> {
 
     User findByLogin(String login);
-
 }

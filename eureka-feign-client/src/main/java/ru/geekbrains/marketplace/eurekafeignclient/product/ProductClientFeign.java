@@ -17,5 +17,4 @@ public interface ProductClientFeign {
 
     @GetMapping("/get/{id}")
     String get(@PathVariable Long id, Principal principal);
-
 }

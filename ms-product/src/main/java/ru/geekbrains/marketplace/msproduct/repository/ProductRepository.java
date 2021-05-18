@@ -9,5 +9,4 @@ import ru.geekbrains.marketplace.msproduct.models.Product;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 //    Page<Product> findProductByDeletedAtIsNull(Pageable var1);
-
 }

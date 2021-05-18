@@ -32,7 +32,6 @@ public class Product {
         this.product_price = price;
         this.url_picture = picture;
     }
-
 //    @OneToMany
 //    @JoinTable(name = "product_item",
 //            joinColumns = @JoinColumn(name = "product_item_id"))
