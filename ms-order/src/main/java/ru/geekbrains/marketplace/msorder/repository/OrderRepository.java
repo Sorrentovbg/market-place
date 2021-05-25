@@ -7,5 +7,4 @@ import ru.geekbrains.marketplace.msorder.models.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-
 }

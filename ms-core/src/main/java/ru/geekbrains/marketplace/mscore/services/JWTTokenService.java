@@ -51,5 +51,4 @@ public class JWTTokenService implements ITokenService {
                 .role(role)
                 .build();
     }
-
 }

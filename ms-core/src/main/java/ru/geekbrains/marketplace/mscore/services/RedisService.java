@@ -19,5 +19,4 @@ public class RedisService  {
     public boolean checkToken(String token){
        return tokenRedisRepository.existsById(token);
     }
-
 }

@@ -65,7 +65,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         if (userInfo.getRole() != null && !userInfo.getRole().isEmpty()) {
             authorities.add(new SimpleGrantedAuthority(userInfo.getRole()));
         }
-
         return new UsernamePasswordAuthenticationToken(userInfo, null, authorities);
     }
 }

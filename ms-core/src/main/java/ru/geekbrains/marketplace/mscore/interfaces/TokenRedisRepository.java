@@ -8,5 +8,4 @@ import ru.geekbrains.marketplace.mscore.models.UserInfo;
 public interface TokenRedisRepository extends KeyValueRepository<UserInfo,String> {
 
     void save(UserInfo user,String token);
-
 }

@@ -60,4 +60,9 @@ public class AuthController {
     public String check() {
         return "OK!";
     }
+
+    @GetMapping("/getuser")
+    public User getUser(String login){
+        return userService.findByLogin(login);
+    }
 }

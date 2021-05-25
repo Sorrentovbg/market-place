@@ -23,7 +23,6 @@ public class ProductService {
 //        int checkedPage = checkPageNumber(page);
         return productRepository.findAll();
     }
-
     public void addProduct(Product product){
         Product productTest = new Product(product.getProductName(),product.getProduct_price(), product.getUrl_picture());
         productRepository.save(productTest);
