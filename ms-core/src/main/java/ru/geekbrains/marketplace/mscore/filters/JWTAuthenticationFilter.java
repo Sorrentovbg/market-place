@@ -54,9 +54,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private UsernamePasswordAuthenticationToken createToken(String authorizationHeader) throws ExpiredJwtException {
         String token = authorizationHeader.replace("Bearer ", "");
-        if(redisService.checkToken(token)){
-            throw new InvalidTokenException();
-        }
+//        if(redisService.checkToken(token)){
+//            throw new InvalidTokenException();
+//        }
         
         UserInfo userInfo = tokenService.parseToken(token);
         

@@ -1,17 +1,16 @@
 package ru.geekbrains.marketplace.msproduct.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.marketplace.eurekafeignclient.order.OrderClientFeign;
-import ru.geekbrains.marketplace.eurekafeignclient.order.OrderControllerFeign;
+import ru.geekbrains.marketplace.mscore.models.dto.ProductDto;
 import ru.geekbrains.marketplace.msproduct.models.Product;
+import ru.geekbrains.marketplace.msproduct.models.specification.ProductSpecifications;
 import ru.geekbrains.marketplace.msproduct.services.ProductService;
 
 import java.security.Principal;
@@ -19,12 +18,10 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/marketplace/v1/product")
 @RequiredArgsConstructor
 public class ProductController {
 
-    @Autowired
-    OrderControllerFeign orderControllerFeign;
 
     @Autowired
     OrderClientFeign orderClientFeign;
@@ -33,17 +30,23 @@ public class ProductController {
     ProductService productService;
 
 
-
-//    @RequestMapping("/getProduct")
-//    public Page<Product> getAllProduct(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "5") Integer size){
-//        return productService.getAllProductNot(page - 1,size);
-//    }
-
-    @RequestMapping("/getProduct")
-    @PreAuthorize("permitAll()")
-    public List<Product> getAllProduct(){
-    return productService.getAllProduct();
+    @GetMapping("/getProduct")
+    public Page<ProductDto> getAllProduct(
+            @RequestParam(name = "p", defaultValue = "1") Integer page){
+        int size = 5;
+        if(page < 1){
+            page = 1;
+        }
+        return productService.getAllProduct(page ,size);
     }
+
+//    @GetMapping("/getProduct")
+//    public Page<ProductDto> getAllProduct(
+//            @RequestParam MultiValueMap<String, String> params,
+//            @RequestParam(name = "p", defaultValue = "1") Integer page){
+//        int size = 5;
+//        return productService.getAllProduct(ProductSpecifications.build(params), page - 1,size);
+//    }
 
     @PostMapping("/addProduct")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -60,10 +63,18 @@ public class ProductController {
     }
 
     @PostMapping("/addProductToOrder/{id}")
-    public String addProduct(@PathVariable(value = "id")String s){
+    public String addProduct(@RequestHeader String authorization,@PathVariable(value = "id")Long productId){
         System.out.println("AddProduct ms-product");
-        String answer = orderClientFeign.addProduct(s);
+        System.out.println("Token " + authorization);
+        System.out.println("productId " + productId);
+        String answer = orderClientFeign.addProductToOrder(authorization,productId);
         return answer;
+    }
+
+    @GetMapping("/getIds")
+        public List<ProductDto> getProductIds(@RequestParam List<Long> ids){
+        System.out.println("Method getProductIds in OrderController = " + ids.size());
+            return productService.findProductByIds(ids);
     }
 }
 
