@@ -2,10 +2,7 @@ package ru.geekbrains.marketplace.msauth.repositories.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.marketplace.msauth.repositories.entities.User;
 import ru.geekbrains.marketplace.msauth.repositories.services.UserService;
 import ru.geekbrains.marketplace.mscore.interfaces.ITokenService;
@@ -16,6 +13,7 @@ import ru.geekbrains.marketplace.mscore.models.dto.SignUpRequestDto;
 import ru.geekbrains.marketplace.mscore.services.RedisService;
 
 @RestController
+@RequestMapping("/marketplace/v1/auth")
 public class AuthController {
 
     @Autowired
