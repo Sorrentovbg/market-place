@@ -3,6 +3,7 @@ CREATE SCHEMA if not exists order_sh;
 create table orders (
     order_id        bigserial,
     user_id         bigserial,
+    total_price     bigserial,
     primary key (order_id)
 );
 
@@ -23,9 +24,6 @@ create table carts (
     id              bigserial,
     user_id         bigserial,
     total_price     bigserial,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp,
-    order_created   bigserial
     primary key (id)
 );
 
@@ -34,12 +32,21 @@ create table carts_item (
     product_id              bigserial,
     price_per_product       bigserial,
     count_product           bigserial,
-    total_price_product     bigserial
+    total_price_product     bigserial,
     foreign key (cart_item_id) references carts(id)
 );
 
-insert into status (status_id,orders_status)
-values  ("Not paid"),
-        ("Paid"),
-        ("Completed");
+create table orders_item (
+    order_item_id            bigserial,
+    product_id              bigserial,
+    price_per_product       bigserial,
+    count_product           bigserial,
+    total_price_product     bigserial,
+    foreign key (order_item_id) references orders(order_id)
+);
+
+INSERT INTO status (orders_status) VALUES
+  ('Not paid'),
+  ('Paid'),
+  ('Completed');
 

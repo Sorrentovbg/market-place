@@ -8,5 +8,4 @@ import ru.geekbrains.marketplace.msorder.models.Cart;
 public interface CartRepository extends JpaRepository<Cart, Long> {
     Cart  findCartByUserId(Long userid);
 
-    Cart findCartByUserIdAndOrderCreatedIsNull(Long userId);
 }

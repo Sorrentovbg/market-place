@@ -5,11 +5,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ProductDto {
+public class CartItemDto {
 
-    private Long product;
+    private Long productId;
 
     private String productName;
 
     private int productPrice;
+
+    private int countProduct;
+
 }

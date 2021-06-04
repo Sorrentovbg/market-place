@@ -4,19 +4,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ru.geekbrains.marketplace.eurekafeignclient.product.ProductClientFeign;
+import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.marketplace.mscore.models.dto.OrderDto;
 
-import ru.geekbrains.marketplace.mscore.models.dto.ProductDto;
-import ru.geekbrains.marketplace.msorder.models.Order;
-import ru.geekbrains.marketplace.msorder.models.Status;
+import ru.geekbrains.marketplace.msorder.models.*;
 import ru.geekbrains.marketplace.msorder.repository.OrderRepository;
 
 
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,52 +22,39 @@ public class OrderService {
     OrderRepository orderRepository;
 
     @Autowired
-    ProductClientFeign productClientFeign;
+    CartService cartService;
 
 
     private final ModelMapper modelMapper = new ModelMapper();
 
 
-
-    public void addToOrder(Long userId, Long productId) {
-        Order order = orderRepository.findOrderByUserId(userId);
-        if (order != null){
-            order.getProductIds().add(productId);
-            orderRepository.save(order);
-        }else {
-            List<Long> productIds = new ArrayList<>();
-            productIds.add(productId);
-            Order newOrder = new Order(userId,productIds);
-            newOrder.getStatus().setId(1L);
-            orderRepository.save(newOrder);
-        }
+    public List<OrderDto> getAllOrder(Long userid) {
+        return orderRepository.findAllByUserId(userid).stream().map(this::toOrder).collect(Collectors.toList());
     }
 
-    public List<Order> getAllOrder() {
-        return orderRepository.findAll();
-    }
-
-    public OrderDto getOrderListById(Long userid) {
-        System.out.println("User id = " + userid);
-        Order order = orderRepository.findOrderByUserId(userid);
-        System.out.println("OrderService order.getProductId() = " + order.getProductIds().size());
-        List<ProductDto> productIds = productClientFeign.getProductIds(order.getProductIds());
-        OrderDto orderDto = modelMapper.map(order, OrderDto.class);
-        orderDto.setProductIds(productIds);
-        return orderDto;
-
-    }
-
-    public String deleteProductFromOrder(Long userId, Long productId) {
-        Order order = orderRepository.findOrderByUserId(userId);
-        List<Long> productIds = order.getProductIds();
-        for (int i = 0; i < productIds.size(); i++){
-            if(productIds.get(i).equals(productId)){
-                productIds.remove(i);
-            }
-        }
-        order.setProductIds(productIds);
+    @Transactional
+    public String createOrder(Long userId) {
+        Cart cart = cartService.getCartToOrder(userId);
+        List<OrderItem> orderItems = cart.getCartItems().stream().map(this::toOrderItem).collect(Collectors.toList());
+        Order order = modelMapper.map(cart, Order.class);
+        order.setOrderItems(orderItems);
+        order.setStatus(new Status());
+        order.getStatus().setId(1L);
+        order.setId(0L);
         orderRepository.save(order);
-        return "Remove ok";
+        cartService.clearCart(userId);
+        return "Ваш заказ создан";
+    }
+
+    public Order getOrderById(Long userID, Long orderId){
+        return orderRepository.findOrderByUserIdAndId(userID, orderId);
+    }
+
+    public OrderItem toOrderItem(CartItem cartItem){
+        return modelMapper.map(cartItem, OrderItem.class);
+    }
+
+    public OrderDto toOrder(Order order){
+        return modelMapper.map(order, OrderDto.class);
     }
 }

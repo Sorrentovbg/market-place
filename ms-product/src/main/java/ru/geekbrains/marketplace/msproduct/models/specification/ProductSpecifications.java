@@ -1,32 +1,41 @@
 package ru.geekbrains.marketplace.msproduct.models.specification;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.MultiValueMap;
+import ru.geekbrains.marketplace.mscore.models.dto.ProductDto;
 import ru.geekbrains.marketplace.msproduct.models.Product;
+
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 public class ProductSpecifications {
     private static Specification<Product> priceGreaterOrEqualsThan(int minPrice) {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice);
+        return new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.greaterThanOrEqualTo(root.get("productPrice"), minPrice);
+            }
+        };
     }
 
     private static Specification<Product> priceLesserOrEqualsThan(int maxPrice) {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice);
+        return new Specification<Product>() {
+            @Override
+            public Predicate toPredicate(Root<Product> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                return criteriaBuilder.lessThanOrEqualTo(root.get("productPrice"), maxPrice);
+            }
+        };
     }
 
-    private static Specification<Product> titleLike(String titlePart) {
-        return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("title"), String.format("%%%s%%", titlePart));
-    }
-
-    public static Specification<Product> build(MultiValueMap<String, String> params) {
+    public static Specification<Product> buildQuery(Integer priceAt, Integer priceTo) {
         Specification<Product> spec = Specification.where(null);
-        if (params.containsKey("min_price") && !params.getFirst("min_price").isBlank()) {
-            spec = spec.and(ProductSpecifications.priceGreaterOrEqualsThan(Integer.parseInt(params.getFirst("min_price"))));
+        if (priceAt != null) {
+            spec = spec.and(ProductSpecifications.priceGreaterOrEqualsThan(priceAt));
         }
-        if (params.containsKey("max_price") && !params.getFirst("max_price").isBlank()) {
-            spec = spec.and(ProductSpecifications.priceLesserOrEqualsThan(Integer.parseInt(params.getFirst("max_price"))));
-        }
-        if (params.containsKey("title") && !params.getFirst("title").isBlank()) {
-            spec = spec.and(ProductSpecifications.titleLike(params.getFirst("title")));
+        if (priceTo != null) {
+            spec = spec.and(ProductSpecifications.priceLesserOrEqualsThan(priceTo));
         }
         return spec;
     }
