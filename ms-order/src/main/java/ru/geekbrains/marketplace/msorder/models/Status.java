@@ -1,8 +1,6 @@
 package ru.geekbrains.marketplace.msorder.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 

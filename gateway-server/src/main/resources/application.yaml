@@ -34,7 +34,7 @@ spring:
         - id: ms-order
           uri: lb://ms-order
           predicates:
-            - Path=/marketplace/*/orders/**,/marketplace/*/cart/**
+            - Path=/marketplace/*/order/**,/marketplace/*/cart/**
     loadbalancer:
       ribbon:
         enabled: false

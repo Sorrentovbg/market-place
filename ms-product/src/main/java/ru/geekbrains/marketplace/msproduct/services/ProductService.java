@@ -4,9 +4,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
 import ru.geekbrains.marketplace.mscore.models.dto.ProductDto;
 import ru.geekbrains.marketplace.msproduct.models.Product;
+import ru.geekbrains.marketplace.msproduct.models.specification.ProductSpecifications;
 import ru.geekbrains.marketplace.msproduct.repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -21,27 +24,38 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-
     private final ModelMapper modelMapper = new ModelMapper();
 
-
-
     public Page<ProductDto> getAllProduct(int page, int size){
-        return productRepository.findAll(PageRequest.of(page -1, size)).map(new Function<Product, ProductDto>() {
-            @Override
-            public ProductDto apply(Product product) {
-                return toDto(product);
+        return productRepository.findAll(PageRequest.of(page -1, size)).map(this::toDto);
+    }
+
+    public Page<ProductDto> getSortedProduct(Integer page, String sort, int size, Integer priceAt, Integer priceTo) {
+        Page<ProductDto> product;
+        if (sort != null){
+            if (sort.equals("asc")){
+                product =  productRepository.findAll(ProductSpecifications.buildQuery(priceAt,priceTo),
+                        PageRequest.of(page - 1, size, Sort.by(Sort.Direction.ASC, "productPrice"))).map(this::toDto);
+                return product;
+            }else if(sort.equals("desc")){
+                product =  productRepository.findAll(ProductSpecifications.buildQuery(priceAt,priceTo),
+                        PageRequest.of(page - 1, size, Sort.by(Sort.Direction.DESC, "productPrice"))).map(this::toDto);
+                return product;
             }
-        });
+        }
+        product = productRepository.findAll(ProductSpecifications.buildQuery(priceAt,priceTo),
+                PageRequest.of(page -1, size)).map(this::toDto);
+
+        return product;
     }
 
     public void addProduct(Product product){
-        Product productTest = new Product(product.getProductName(),product.getProduct_price(), product.getUrl_picture());
+        Product productTest = new Product(product.getProductName(),product.getProductPrice(), product.getUrlPicture());
         productRepository.save(productTest);
     }
 
-    public Optional<Product> getProductById(Long id){
-        return  productRepository.findById(id);
+    public Optional<ProductDto> getProductToCart(Long id){
+        return  productRepository.findById(id).map(this::toDto);
 
     }
 
@@ -52,36 +66,10 @@ public class ProductService {
             ProductDto dtos = toDto(productIds.get(i));
             productDtosIds.add(dtos);
         }
-
-//        List<ProductDto> productIds = productRepository.findAllById(ids).stream().map(new Function<Product, ProductDto>() {
-//            @Override
-//            public ProductDto apply(Product product){
-//                return ProductService.this.toDto(product);
-//            }
-//        }).collect(Collectors.toList());
-
         return productDtosIds;
     }
 
     public ProductDto toDto (Product product){
-        System.out.println("Method toDto(productName = " + product.getProductName() + " )");
-        System.out.println("Method toDto(productName = " + product.getProduct() + " )");
-        System.out.println("Method toDto(productName = " + product.getProduct_price() + " )");
         return modelMapper.map(product, ProductDto.class);
     }
-//    public Page<Product> getAllProductNot(int page, int size){
-//        int checkedPage = checkPageNumber(page);
-//        return productRepository.findProductByDeletedAtIsNull(PageRequest.of(checkedPage,size));
-//    }
-//
-//    private int checkPageNumber(int page) {
-//        int pageNumber = page;
-//        if(page < 0){
-//            pageNumber = 0;
-//        }
-//        if(page >= productRepository.findProductByDeletedAtIsNull(PageRequest.of(0,5)).getTotalPages()){
-//            pageNumber = productRepository.findProductByDeletedAtIsNull(PageRequest.of(0,5)).getTotalPages() - 1;
-//        }
-//        return pageNumber;
-//    }
 }

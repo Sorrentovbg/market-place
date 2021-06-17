@@ -3,7 +3,6 @@ package ru.geekbrains.marketplace.msorder.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.marketplace.mscore.models.UserInfo;
 import ru.geekbrains.marketplace.mscore.models.dto.OrderDto;
 import ru.geekbrains.marketplace.mscore.services.JWTTokenService;
 import ru.geekbrains.marketplace.msorder.models.Order;
@@ -22,33 +21,24 @@ public class OrderController {
     @Autowired
     JWTTokenService jwtTokenService;
 
-    @PostMapping("/addProductToOrder/{id}")
-    public String addProductToOrder(@RequestHeader String authorization, @PathVariable(value = "id")Long productId){
-        System.out.println("Token " + authorization);
-        System.out.println("ProductId " + productId);
-        UserInfo userInfo =jwtTokenService.parseToken(authorization);
-        Long userId = userInfo.getUserId();
-        orderService.addToOrder(userId,productId);
-        String answer = "OK";
-        return answer;
+
+    @PostMapping("/createOrder")
+    public String createOrder(@RequestHeader String authorization){
+        Long userId = jwtTokenService.parseToken(authorization).getUserId();
+        return orderService.createOrder(userId);
     }
+
 
     @GetMapping("/getAllOrder")
-    public List<Order> getOrder(){
-        return orderService.getAllOrder();
+    public List<OrderDto> getOrder(@RequestHeader String authorization){
+        Long userId = jwtTokenService.parseToken(authorization).getUserId();
+        return orderService.getAllOrder(userId);
     }
 
-    @GetMapping("/getIds")
-    public OrderDto orderById(@RequestHeader String authorization){
-        UserInfo userInfo = jwtTokenService.parseToken(authorization);
-        Long userid = userInfo.getUserId();
-        return orderService.getOrderListById(userid);
+    @GetMapping("/getOrderById/{id}")
+    public Order getOrderById(@RequestHeader String authorization, @PathVariable(value = "id")Long orderId){
+        Long userId = jwtTokenService.parseToken(authorization).getUserId();
+        return orderService.getOrderById(userId,orderId);
     }
-//    Пробую передать лист через Param
-    @GetMapping("/deleteFromOrder/{id}")
-    public String deleteFromOrder(@RequestHeader String authorization, @PathVariable(value = "id") Long productId){
-        UserInfo userInfo =jwtTokenService.parseToken(authorization);
-        Long userId = userInfo.getUserId();
-        return orderService.deleteProductFromOrder(userId, productId);
-    }
+
 }

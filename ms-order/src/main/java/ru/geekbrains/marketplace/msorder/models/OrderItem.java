@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cart_item")
-
+@Table(name = "orders_item")
 @Data
+
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItem {
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class CartItem {
     @Column(name = "total_price_product")
     private int  totalPriceProduct;
 
-    public CartItem(Long productId, String productName, int pricePerProduct, int count, int totalPriceProduct) {
+    public OrderItem(Long productId, String productName, int pricePerProduct, int count, int totalPriceProduct) {
         this.productId = productId;
         this.productName = productName;
         this.pricePerProduct = pricePerProduct;

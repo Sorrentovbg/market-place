@@ -28,10 +28,11 @@ public class Order {
     @JoinColumn(name = "status_id")
     private Status status;
 
-    @ElementCollection
-    @CollectionTable(name = "orders_products", joinColumns = @JoinColumn(name = "order_id"))
-    @Column(name="product_id")
-    private List<Long> productIds;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
+
+    @Column(name = "total_price")
+    private Integer totalPrice;
 
     @Column(name = "created_at")
     @CreationTimestamp
@@ -41,9 +42,9 @@ public class Order {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    public Order(Long userId, List<Long> productIds){
+    public Order(Long userId, List<OrderItem> orderItems){
         this.userId = userId;
-        this.productIds = productIds;
+        this.orderItems = orderItems;
         this.status = new Status();
     }
 }

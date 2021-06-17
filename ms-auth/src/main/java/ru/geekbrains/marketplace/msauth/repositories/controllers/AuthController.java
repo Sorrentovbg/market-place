@@ -48,9 +48,9 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public void logout(@RequestBody String token){
-        UserInfo userInfo = tokenService.parseToken(token);
-        redisService.putInvalidToken(userInfo,token);
+    public void logout(@RequestHeader String authorization){
+        UserInfo userInfo = tokenService.parseToken(authorization);
+        redisService.putInvalidToken(authorization);
     }
 
     @GetMapping("/check")

@@ -3,22 +3,16 @@ package ru.geekbrains.marketplace.mscore.models.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
+import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class OrderDto {
-
-    private Long id;
+public class CartDto {
 
     private Long userId;
 
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
+    private List<CartItemDto> cartItems;
 
     private Integer totalPrice;
 
-    private String status;
 }
